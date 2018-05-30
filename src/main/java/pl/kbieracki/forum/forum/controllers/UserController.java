@@ -69,7 +69,6 @@ public class UserController {
             return "register";
         }
 
-
         return"redirect:/";
     }
 

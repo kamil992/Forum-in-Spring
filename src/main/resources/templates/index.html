@@ -6,8 +6,50 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 </head>
 <body>
-<a href="register">Register</a>
-<h1>index</h1>
+<div id="banner" class="navbar navbar-default navbar-fixed-top">
+    <h1>FORUM</h1>
 
+    <div>
+    <form  class="form-inline">
+        <div  class="form-group mb-2">
+            <label class="sr-only">Email</label>
+            <input id="loginInput1" type="text" class="form-control" placeholder="email@example.com">
+
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+            <label class="sr-only">Password</label>
+            <input id="loginInput2" type="password" class="form-control" placeholder="Password">
+        </div>
+        <div  class="form-group mb-2">
+        <button id="loginButton" type="submit" class="btn">Login</button>
+        </div>
+    </form>
+        <small id="register" class="text" class="text-danger">Do not have an account yet? <a href="register">Just Register here.</a></small>
+    </div>
+
+</div>
+
+
+
+<style>
+
+
+    #banner {
+        height: 110px;
+        background-color: white;
+        box-shadow: 0px 3px 3px 2px rgba(0, 0, 0, 0.2);
+    }
+    #loginInput1,#loginInput2{
+        padding: 2px 15px;
+    }
+    #loginButton{
+        padding: 2px 15px;
+
+    }
+    #register{
+        align: right;
+    }
+
+</style>
 </body>
 </html>
