@@ -88,7 +88,7 @@ public class UserController {
                                Model model){
 
         //check if password and repeat password are the same
-        if(!registerForm.getRepeatPassword().equals(registerForm.getPassword())){
+        if( registerForm.getPassword().isEmpty() ||!registerForm.getRepeatPassword().equals(registerForm.getPassword())){
             model.addAttribute("isValidPassword", "Passwords are not the same!");
             return "register";
         }

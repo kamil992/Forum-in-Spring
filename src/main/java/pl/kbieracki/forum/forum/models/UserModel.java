@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Email;
 import pl.kbieracki.forum.forum.models.forms.RegisterForm;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 
@@ -21,10 +22,11 @@ public class UserModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    @Min(value = 5)
     @NotNull
     private String login;
 
-    @NotNull
+    @Min(value = 5)
     private String password;
 
 

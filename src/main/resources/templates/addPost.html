@@ -9,20 +9,24 @@
 <div id="banner" class="navbar navbar-default navbar-fixed-top">
     <h1>FORUM</h1>
     <div>
-    <div id="login" th:text="'User:  ' + ${user.getLogin()}"></div>
-
+        <div id="login" th:text="'User:  ' + ${user.getLogin()}"></div>
         <ul class="nav justify-content-end">
-            <li class="nav-item">
-                <a class="nav-link active" href="/addPost">Add New Post</a>
-            </li>
             <li class="nav-item">
                 <a class="nav-link disabled" href="/logout">Logout</a>
             </li>
         </ul>
     </div>
-
 </div>
 
+        <div class="container">
+            <form id="form" th:action="@{/addPost}"  method="post" th:object="${postForm}"><br>
+                <p>Title</p>
+                <small class="form-text text-muted" class="text-danger" th:if="${emptyFields != null}" th:text="${emptyFields}"></small>
+                <textarea name="title" cols="150" rows="1" th:field="*{title}"></textarea>
+                <textarea name="text" cols="150" rows="10" placeholder="Write something here!" th:field="*{text}"></textarea>
+                <button type="submit" class="btn" href="dashboard">Add</button>
+            </form>
+        </div>
 
 
 <style>
@@ -30,21 +34,14 @@
     body{
         background-color: rgb(240, 240, 240);
     }
+
     #banner {
         height: 110px;
         background-color: white;
         box-shadow: 0px 3px 3px 2px rgba(0, 0, 0, 0.2);
     }
-    #loginInput1,#loginInput2{
-        padding: 2px 15px;
-    }
-    #loginButton{
-        padding: 2px 15px;
 
-    }
-    #register{
-        align: right;
-    }
+
     #login{
         text-align: right;
         margin-right: 20px;
