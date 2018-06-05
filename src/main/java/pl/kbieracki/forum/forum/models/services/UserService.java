@@ -23,8 +23,8 @@ public class UserService {
     @Getter @Setter
     private boolean isLogin;
 
-//    @Getter @Setter
-//    private UserModel userModel;
+    @Getter @Setter
+    private UserModel user;
 
     final
     UserRepository userRepository;

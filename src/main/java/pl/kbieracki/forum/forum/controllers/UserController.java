@@ -8,9 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.kbieracki.forum.forum.models.UserModel;
 import pl.kbieracki.forum.forum.models.forms.RegisterForm;
 import pl.kbieracki.forum.forum.models.repositories.UserRepository;
 import pl.kbieracki.forum.forum.models.services.UserService;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -27,22 +31,53 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/")
-    public String index(){
-        return "index";
+    //method which allow to use user object i html files
+    @ModelAttribute
+    public Model startModel(Model model){
+        model.addAttribute("user", userService.getUser());
+        return model;
     }
 
+    @GetMapping("/login")
+    public String index(){
+        return "login";
+    }
+
+    @GetMapping("/")
+    public String dashboard(){
+        return "dashboard";
+    }
+
+
+    //Login to forum:
     @PostMapping("/login")
-    public String login(@RequestParam("login") String login,
-                        @RequestParam("password") String password,
+    public String login(@RequestParam("password") String password,
                         @RequestParam("email") String email,
                         Model model){
 
-        return "index";
+        Optional<UserModel> userExists = userRepository.findByEmailAndPassword(email, password);
+        if(userExists.isPresent()) {
+            userService.setLogin(true);
+            userService.setUser(userExists.get());
+            //model.addAttribute("isLogin", userService.isLogin());
+            return "redirect:/";
+        }
+
+       // model.addAttribute("isLogin", userService.isLogin());
+        model.addAttribute("invalidInfo", "Incorrect email or password");
+        return "login";
 
     }
 
-    ////Registration to Forum:
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest requestHandler){
+        userService.setLogin(false);
+        requestHandler.changeSessionId();
+
+        return "redirect:/";
+    }
+
+    //Registration to Forum:
     @GetMapping("/register")
     public String register(Model model){
         model.addAttribute("registerForm", new RegisterForm());
