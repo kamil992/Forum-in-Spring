@@ -7,7 +7,7 @@
 </head>
 <body>
 <div id="banner" class="navbar navbar-default navbar-fixed-top">
-    <h1>FORUM</h1>
+    <h1 id="title">FORUM</h1>
     <div>
     <div id="login" th:text="'User:  ' + ${user.getLogin()}"></div>
 
@@ -23,6 +23,24 @@
 
 </div>
 
+    <div id="jumbotron" class="jumbotron jumbotron-fluid">
+        <div class="container">
+<div>
+    <div th:each="content : ${post}">
+        <div class="card">
+            <div class="card-body">
+                <h6 id="postTitle" th:text="${content.getTitle()}"></h6>
+                <h7 class="card-subtitle mb-2 text-muted">Card subtitle</h7>
+                <p th:text="${content.getText()}"></p>
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+    </div>
+
 
 
 <style>
@@ -30,24 +48,37 @@
     body{
         background-color: rgb(240, 240, 240);
     }
+
     #banner {
         height: 110px;
         background-color: white;
         box-shadow: 0px 3px 3px 2px rgba(0, 0, 0, 0.2);
     }
-    #loginInput1,#loginInput2{
-        padding: 2px 15px;
-    }
-    #loginButton{
-        padding: 2px 15px;
 
-    }
-    #register{
-        align: right;
-    }
     #login{
         text-align: right;
         margin-right: 20px;
+    }
+    #jumbotron{
+        margin-right: 30px;
+        margin-left: 30px;
+        margin-bottom: 30px;
+        background-color: white;
+        border-bottom: 1px solid;
+        border-left:1px solid;
+        border-right:1px solid;
+        border-color: rgba(0, 0, 0, 0.2);
+    }
+    .card{
+        width: inherit;
+        margin-bottom: 6px;
+        box-shadow: 0px 3px 3px 2px rgba(0, 0, 0, 0.2);
+    }
+    #postTitle{
+        background-color: rgb(240, 240, 240) ;
+    }
+    p{
+        font-size: 12px;
     }
 
 </style>

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.kbieracki.forum.forum.models.UserModel;
 import pl.kbieracki.forum.forum.models.forms.RegisterForm;
+import pl.kbieracki.forum.forum.models.repositories.PostRepository;
 import pl.kbieracki.forum.forum.models.repositories.UserRepository;
 import pl.kbieracki.forum.forum.models.services.UserService;
 
@@ -25,10 +26,14 @@ public class UserController {
     final
     UserRepository userRepository;
 
+    final
+    PostRepository postRepository;
+
     @Autowired
-    public UserController(UserService userService, UserRepository userRepository) {
+    public UserController(UserService userService, UserRepository userRepository, PostRepository postRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
+        this.postRepository = postRepository;
     }
 
     //method which allow to use user object i html files
@@ -39,12 +44,14 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String index(){
+    public String index(Model model){
+        model.addAttribute("post", postRepository.findAllByOrderByIdDesc());
         return "login";
     }
 
     @GetMapping("/")
-    public String dashboard(){
+    public String dashboard(Model model){
+        model.addAttribute("post", postRepository.findAllByOrderByIdDesc());
         return "dashboard";
     }
 
