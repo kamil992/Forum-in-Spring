@@ -21,6 +21,10 @@ public class PostModel {
     @NotNull
     private String text;
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private UserModel user;
+
     public PostModel(PostForm postform){
         this.title = postform.getTitle();
         this.text = postform.getText();

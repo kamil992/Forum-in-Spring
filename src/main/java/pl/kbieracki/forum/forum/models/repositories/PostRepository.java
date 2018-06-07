@@ -5,8 +5,11 @@ import org.springframework.stereotype.Repository;
 import pl.kbieracki.forum.forum.models.PostModel;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PostRepository extends CrudRepository<PostModel, Integer> {
     List<PostModel> findAllByOrderByIdDesc();
+
+
 }

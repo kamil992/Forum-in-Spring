@@ -6,10 +6,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 </head>
 <body>
+
 <div id="banner" class="navbar navbar-default navbar-fixed-top">
     <h1 id="title">FORUM</h1>
     <div>
-    <div id="login" th:text="'User:  ' + ${user.getLogin()}"></div>
+        <div id="login" th:text="'User:  ' + ${user.getLogin()}"></div>
 
         <ul class="nav justify-content-end">
             <li class="nav-item">
@@ -20,28 +21,21 @@
             </li>
         </ul>
     </div>
-
 </div>
 
-    <div id="jumbotron" class="jumbotron jumbotron-fluid">
-        <div class="container">
-<div>
-    <div th:each="content : ${post}">
-        <div class="card">
-            <div class="card-body">
-                <a th:href="'/post/' + ${content.getId()}">
-                    <h6 id="postTitle" th:text="${content.getTitle()}"></h6></a>
-                <h7 id="author" class="card-subtitle mb-2" th:text="'Author: ' + ${content.getUser().getLogin()}"></h7>
-                <!--<p th:text="${content.getText()}"></p>!--><br>
-                <a th:href="'/post/' + ${content.getId()}" class="card-link">To the post</a>
-                <a href="#" class="card-link">Another link</a>
-            </div>
-        </div>
+<div id="jumbotron" class="jumbotron jumbotron-fluid">
+    <div class="container">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h6 id="postTitle" th:text="${post.getTitle()}"></h6>
+                        <h7 id="author" class="card-subtitle mb-2" th:text="'Author: ' + ${post.getUser().getLogin()}"></h7><hr>
+                        <p th:text="${post.getText()}"></p>
+                    </div>
+                </div>
+
     </div>
 </div>
-        </div>
-    </div>
-
 
 
 <style>
@@ -72,16 +66,20 @@
     }
     .card{
         width: inherit;
+        margin-bottom: 6px;
+        box-shadow: 0px 3px 3px 2px rgba(0, 0, 0, 0.2);
     }
     #postTitle{
         background-color: rgb(240, 240, 240) ;
     }
     p{
-        font-size: 12px;
+        font-size: 14px;
     }
     #author{
         font-size: 14px;
     }
+
+
 
 </style>
 </body>

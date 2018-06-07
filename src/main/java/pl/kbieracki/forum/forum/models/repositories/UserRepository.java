@@ -12,6 +12,8 @@ public interface UserRepository extends CrudRepository<UserModel, Integer> {
     Optional<UserModel> findByLoginAndPassword(String login, String password);
     Optional<UserModel> findByEmailAndPassword(String email, String password);
 
+
+
     //Methods using to register:
     boolean existsByEmail(String email);
     boolean existsByLogin(String login);

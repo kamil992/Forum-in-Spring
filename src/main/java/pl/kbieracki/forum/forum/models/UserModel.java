@@ -22,11 +22,11 @@ public class UserModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Min(value = 5)
+
     @NotNull
     private String login;
 
-    @Min(value = 5)
+    @NotNull
     private String password;
 
 

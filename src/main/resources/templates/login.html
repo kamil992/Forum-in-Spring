@@ -34,13 +34,12 @@
 <div id="jumbotron" class="jumbotron jumbotron-fluid">
     <div class="container">
         <div>
-            <p id="info" class="text-danger">If You like to see more SIGN IN.</p>
+            <p id="info" class="text-danger">If You would like to see more SIGN IN.</p>
             <div th:each="content : ${post}">
                 <div class="card">
                     <div class="card-body">
                         <h6 id="postTitle" th:text="${content.getTitle()}"></h6>
-                        <h7 class="card-subtitle mb-2 text-muted">Card subtitle</h7>
-                        <p th:text="${content.getText()}"></p>
+                        <h7 id="author" class="card-subtitle mb-2" th:text="'Author: ' + ${content.getUser().getLogin()}"></h7>
                     </div>
                 </div>
             </div>
@@ -82,8 +81,7 @@
     }
     .card{
         width: inherit;
-        margin-bottom: 6px;
-        box-shadow: 0px 3px 3px 2px rgba(0, 0, 0, 0.2);
+
     }
     #postTitle{
         background-color: rgb(240, 240, 240) ;
@@ -93,6 +91,9 @@
     }
     #info{
         font-size: 16px;
+    }
+    #author{
+        font-size: 14px;
     }
 
 </style>
