@@ -29,6 +29,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h6 id="postTitle" th:text="${post.getTitle()}"></h6>
+                        <h7 id="time" class="card-subtitle mb-2" th:text="'Created: ' + ${post.getCreationTime()}"></h7><br>
                         <h7 id="author" class="card-subtitle mb-2" th:text="'Author: ' + ${post.getUser().getLogin()}"></h7><hr>
                         <p th:text="${post.getText()}"></p>
                     </div>
@@ -75,7 +76,7 @@
     p{
         font-size: 14px;
     }
-    #author{
+    h7{
         font-size: 14px;
     }
 

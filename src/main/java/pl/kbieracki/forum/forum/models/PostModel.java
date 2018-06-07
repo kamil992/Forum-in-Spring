@@ -6,6 +6,7 @@ import pl.kbieracki.forum.forum.models.forms.PostForm;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Table(name = "post_forum")
 @Entity
@@ -24,6 +25,9 @@ public class PostModel {
     @OneToOne
     @JoinColumn(name = "user_id")
     private UserModel user;
+
+    @Column(name = "creation_time")
+    private LocalDateTime creationTime;
 
     public PostModel(PostForm postform){
         this.title = postform.getTitle();

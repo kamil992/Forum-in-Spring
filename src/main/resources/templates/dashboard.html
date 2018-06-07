@@ -31,6 +31,7 @@
             <div class="card-body">
                 <a th:href="'/post/' + ${content.getId()}">
                     <h6 id="postTitle" th:text="${content.getTitle()}"></h6></a>
+                <h7 id="time" class="card-subtitle mb-2" th:text="'Created: ' + ${content.getCreationTime()}"></h7><br>
                 <h7 id="author" class="card-subtitle mb-2" th:text="'Author: ' + ${content.getUser().getLogin()}"></h7>
                 <!--<p th:text="${content.getText()}"></p>!--><br>
                 <a th:href="'/post/' + ${content.getId()}" class="card-link">To the post</a>
@@ -79,7 +80,7 @@
     p{
         font-size: 12px;
     }
-    #author{
+    h7{
         font-size: 14px;
     }
 
