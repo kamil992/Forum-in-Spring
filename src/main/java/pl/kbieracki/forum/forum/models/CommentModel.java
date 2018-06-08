@@ -2,39 +2,34 @@ package pl.kbieracki.forum.forum.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.kbieracki.forum.forum.models.forms.PostForm;
+import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.List;
 
-@Table(name = "post_forum")
 @Entity
-@Data
+@Table(name = "comment_forum")
 @NoArgsConstructor
-public class PostModel {
+@Data
+public class CommentModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-
-    @NotNull
-    private String title;
-    @NotNull
-    private String text;
 
     @OneToOne
     @JoinColumn(name = "user_id")
     private UserModel user;
 
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private PostModel post;
+
+    @NotNull
+    private String comment;
+
     @Column(name = "creation_time")
     private LocalDateTime creationTime;
 
-    @OneToMany(mappedBy = "post")
-    List<CommentModel> comments;
-
-    public PostModel(PostForm postform){
-        this.title = postform.getTitle();
-        this.text = postform.getText();
-    }
 }

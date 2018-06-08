@@ -36,6 +36,7 @@ public class UserService {
 
     public RegisterStatus register(RegisterForm registerForm){
         //Chceck if email busy
+
         if(userRepository.existsByEmail(registerForm.getEmail())){
             return RegisterStatus.BUSY_EMAIL;
         }
