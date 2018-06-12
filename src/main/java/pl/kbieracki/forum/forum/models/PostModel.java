@@ -33,6 +33,8 @@ public class PostModel {
     @OneToMany(mappedBy = "post")
     List<CommentModel> comments;
 
+    private int rating;
+
     public PostModel(PostForm postform){
         this.title = postform.getTitle();
         this.text = postform.getText();

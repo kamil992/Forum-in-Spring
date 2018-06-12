@@ -6,9 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.kbieracki.forum.forum.models.CommentModel;
 import pl.kbieracki.forum.forum.models.PostModel;
+import pl.kbieracki.forum.forum.models.PostRatingModel;
 import pl.kbieracki.forum.forum.models.forms.PostForm;
 import pl.kbieracki.forum.forum.models.repositories.CommentRepository;
 import pl.kbieracki.forum.forum.models.repositories.PostRepository;
+import pl.kbieracki.forum.forum.models.repositories.RatingRepository;
 import pl.kbieracki.forum.forum.models.repositories.UserRepository;
 import pl.kbieracki.forum.forum.models.services.UserService;
 
@@ -27,12 +29,16 @@ public class PostController {
     final
     CommentRepository commentRepository;
 
+    final
+    RatingRepository ratingRepository;
+
     @Autowired
-    public PostController(UserService userService, PostRepository postRepository, UserRepository userRepository, CommentRepository commentRepository) {
+    public PostController(UserService userService, PostRepository postRepository, UserRepository userRepository, CommentRepository commentRepository, RatingRepository ratingRepository) {
         this.userService = userService;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.commentRepository = commentRepository;
+        this.ratingRepository = ratingRepository;
     }
 
     @ModelAttribute
@@ -89,5 +95,38 @@ public class PostController {
         }
 
         return "redirect:/post/" + id;
+    }
+
+
+    @GetMapping("/rating/plus/{postId}")
+    public String ratePlus(@PathVariable("postId") int postId){
+
+        if(ratingRepository.existsByUserIdAndPostId(userService.getUser().getId(), postId))
+            return "redirect:/";
+
+        PostModel postModel = postRepository.findOne(postId);
+        postModel.setRating(postModel.getRating() + 1);
+        postRepository.save(postModel);
+
+        PostRatingModel postRatingModel = new PostRatingModel(userService.getUser().getId(), postId);
+        ratingRepository.save(postRatingModel);
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/rating/minus/{postId}")
+    public String rateMinus(@PathVariable("postId") int postId){
+
+        if(ratingRepository.existsByUserIdAndPostId(userService.getUser().getId(), postId))
+            return "redirect:/";
+
+        PostModel postModel = postRepository.findOne(postId);
+        postModel.setRating(postModel.getRating() - 1);
+        postRepository.save(postModel);
+
+        PostRatingModel postRatingModel = new PostRatingModel(userService.getUser().getId(), postId);
+        ratingRepository.save(postRatingModel);
+
+        return "redirect:/";
     }
 }
