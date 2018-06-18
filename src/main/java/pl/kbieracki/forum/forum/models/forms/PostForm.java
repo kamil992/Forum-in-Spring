@@ -10,4 +10,5 @@ public class PostForm {
     private int id;
     private String title;
     private String text;
+    private String category;
 }

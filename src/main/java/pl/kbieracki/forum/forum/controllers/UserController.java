@@ -4,17 +4,16 @@ package pl.kbieracki.forum.forum.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import pl.kbieracki.forum.forum.models.UserModel;
 import pl.kbieracki.forum.forum.models.forms.RegisterForm;
+import pl.kbieracki.forum.forum.models.repositories.CategoryRepository;
 import pl.kbieracki.forum.forum.models.repositories.PostRepository;
 import pl.kbieracki.forum.forum.models.repositories.UserRepository;
 import pl.kbieracki.forum.forum.models.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 import java.util.Optional;
 
 @Controller
@@ -29,17 +28,22 @@ public class UserController {
     final
     PostRepository postRepository;
 
+    final
+    CategoryRepository categoryRepository;
+
     @Autowired
-    public UserController(UserService userService, UserRepository userRepository, PostRepository postRepository) {
+    public UserController(UserService userService, UserRepository userRepository, PostRepository postRepository, CategoryRepository categoryRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.postRepository = postRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     //method which allow to use user object i html files
     @ModelAttribute
     public Model startModel(Model model){
         model.addAttribute("user", userService.getUser());
+        model.addAttribute("categories", categoryRepository.findAll());
         return model;
     }
 
@@ -52,6 +56,14 @@ public class UserController {
     @GetMapping("/")
     public String dashboard(Model model){
         model.addAttribute("post", postRepository.findAllByOrderByIdDesc());
+        return "dashboard";
+    }
+
+    @GetMapping("/category/{category}")
+    public String index(Model model,
+                        @PathVariable("category") String category){
+        model.addAttribute("post", categoryRepository.findByName(category).getPostList());
+
         return "dashboard";
     }
 

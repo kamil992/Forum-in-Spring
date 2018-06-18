@@ -26,10 +26,10 @@ public class LoginHandler implements HandlerInterceptor {
         String requestURI = httpServletRequest.getRequestURI();
 
         if(!userService.isLogin()
-                && !(requestURI.equals("/login")
-                || requestURI.equals("/register"))){
-            httpServletResponse.sendRedirect("/login");
-            return false;
+                    && !(requestURI.equals("/login")
+                    || requestURI.equals("/register"))){
+                httpServletResponse.sendRedirect("/login");
+                return false;
         }
 
         return true;

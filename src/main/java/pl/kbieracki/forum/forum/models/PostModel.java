@@ -33,6 +33,10 @@ public class PostModel {
     @OneToMany(mappedBy = "post")
     List<CommentModel> comments;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    CategoryModel category;
+
     private int rating;
 
     public PostModel(PostForm postform){

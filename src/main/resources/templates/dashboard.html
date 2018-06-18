@@ -26,12 +26,20 @@
 
 <div id="jumbotron" class="jumbotron jumbotron-fluid">
     <div class="container">
+
+        <nav class="nav nav-tabs">
+         <span th:each="category : ${categories}">
+         <a class="nav-link active" th:href="'/category/' + ${category.getName()}" th:text="${category.getName()}"></a>
+         </span>
+        </nav>
+
         <div>
             <div th:each="content : ${post}">
                 <div class="card">
                     <div class="card-body">
                         <a th:href="'/post/' + ${content.getId()}">
                             <h6 id="postTitle" th:text="${content.getTitle()}"></h6></a>
+                        <small th:text="${content.getCategory().getName()}"></small><br>
                         <h7 id="time" class="card-subtitle mb-2"
                             th:text="'Created: ' + ${content.getCreationTime().getDayOfMonth()} +
 '  ' + ${content.getCreationTime().getMonth()} + '  ' + ${content.getCreationTime().getYear()} +
@@ -40,9 +48,9 @@
                         <h7 id="author" class="card-subtitle mb-2"
                             th:text="'Author: ' + ${content.getUser().getLogin()}"></h7>
                         <!--<p th:text="${content.getText()}"></p>!--><br>
-                       <div style=" display: flex;">
+                       <div id="rating">
                         <a id ="plus" th:href="'/rating/plus/' + ${content.getId()} + '  '" >Like</a>
-                        <p  th:text="' | ' + ${content.getRating()} + ' | '"></p>
+                        <p style="margin-left: 5px; margin-right: 5px;"  th:text="${content.getRating()}"></p>
                         <a id="minus" th:href="'/rating/minus/' + ${content.getId()} + '  '" >Not like</a>
                        </div>
                     </div>
@@ -95,6 +103,13 @@
 
     h7 {
         font-size: 12px;
+    }
+    #rating{
+        display: flex;
+        grid-column-gap: 7px;
+    }
+    nav{
+        margin-bottom: 10px;
     }
 
 

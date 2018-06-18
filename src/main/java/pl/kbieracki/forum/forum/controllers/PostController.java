@@ -4,14 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.kbieracki.forum.forum.models.CategoryModel;
 import pl.kbieracki.forum.forum.models.CommentModel;
 import pl.kbieracki.forum.forum.models.PostModel;
 import pl.kbieracki.forum.forum.models.PostRatingModel;
 import pl.kbieracki.forum.forum.models.forms.PostForm;
-import pl.kbieracki.forum.forum.models.repositories.CommentRepository;
-import pl.kbieracki.forum.forum.models.repositories.PostRepository;
-import pl.kbieracki.forum.forum.models.repositories.RatingRepository;
-import pl.kbieracki.forum.forum.models.repositories.UserRepository;
+import pl.kbieracki.forum.forum.models.repositories.*;
 import pl.kbieracki.forum.forum.models.services.UserService;
 
 @Controller
@@ -32,13 +30,19 @@ public class PostController {
     final
     RatingRepository ratingRepository;
 
+    final
+    CategoryRepository categoryRepository;
+
     @Autowired
-    public PostController(UserService userService, PostRepository postRepository, UserRepository userRepository, CommentRepository commentRepository, RatingRepository ratingRepository) {
+    public PostController(UserService userService, PostRepository postRepository,
+                          UserRepository userRepository, CommentRepository commentRepository,
+                          RatingRepository ratingRepository, CategoryRepository categoryRepository) {
         this.userService = userService;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.commentRepository = commentRepository;
         this.ratingRepository = ratingRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @ModelAttribute
@@ -51,6 +55,7 @@ public class PostController {
     @GetMapping("/addPost")
     public String getPost(Model model) {
         model.addAttribute("postForm", new PostForm());
+        model.addAttribute("categories", categoryRepository.findAll());
         return "addPost";
     }
 
@@ -65,6 +70,7 @@ public class PostController {
 
         PostModel postModel = new PostModel(postForm);
         postModel.setUser(userService.getUser());
+        postModel.setCategory(categoryRepository.findByName(postForm.getCategory()));
         postRepository.save(postModel);
         return "redirect:/";
     }
